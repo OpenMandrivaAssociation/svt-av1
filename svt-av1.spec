@@ -6,7 +6,7 @@
 
 Name:           svt-av1
 Version:        0.8.7
-Release:        %autorelease
+Release:        1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
 License:        BSD and MIT and ISC and Public Domain
