@@ -6,7 +6,7 @@
 
 Name:           svt-av1
 Version:        0.8.7
-Release:        %autorelease
+Release:        1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
 License:        BSD and MIT and ISC and Public Domain
@@ -54,7 +54,7 @@ This package contains the documentation for development of SVT-AV1.
 
 %package -n     gstreamer1.0-%{name}
 Summary:        GStreamer 1.0 %{name}-based plug-in
-Requires:       gstreamer1.0-plugins-base{?_isa}
+Requires:       gstreamer1.0-plugins-base
 
 %description -n gstreamer1.0-%{name}
 This package provides %{name}-based GStreamer plug-in.
@@ -70,11 +70,12 @@ sed -e "s|install: true,|install: true, include_directories : [ include_director
     -DCMAKE_BUILD_TYPE=Release
 %make_build
 
+cd ..
 export LIBRARY_PATH="$LIBRARY_PATH:$(pwd)/Bin/Release"
-pushd gstreamer-plugin
+cd gstreamer-plugin
 %meson
 %meson_build
-popd
+cd ..
 
 %install
 %make_install -C build
