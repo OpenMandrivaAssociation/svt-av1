@@ -71,10 +71,10 @@ sed -e "s|install: true,|install: true, include_directories : [ include_director
 %make_build
 
 export LIBRARY_PATH="$LIBRARY_PATH:$(pwd)/Bin/Release"
-pushd gstreamer-plugin
+cd gstreamer-plugin
 %meson
 %meson_build
-popd
+cd..
 
 %install
 %make_install -C build
