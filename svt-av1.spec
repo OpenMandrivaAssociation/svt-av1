@@ -1,4 +1,4 @@
-%define major 4
+%define major 0
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
