@@ -54,7 +54,7 @@ This package contains the documentation for development of SVT-AV1.
 
 %package -n     gstreamer1.0-%{name}
 Summary:        GStreamer 1.0 %{name}-based plug-in
-Requires:       gstreamer1.0-plugins-base{?_isa}
+Requires:       gstreamer1.0-plugins-base
 
 %description -n gstreamer1.0-%{name}
 This package provides %{name}-based GStreamer plug-in.
