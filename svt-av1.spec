@@ -3,15 +3,20 @@
 %define devpackage %mklibname -d svt-av1
 
 %define oname   SVT-AV1
+%define snapshot 20220112
 
 Name:           svt-av1
-Version:        0.8.7
-Release:        1
+Version:        0.9.0
+Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
-License:        BSD and MIT and ISC and Public Domain
+License:        BSD 3-clause
 URL:            https://gitlab.com/AOMediaCodec/SVT-AV1
+%if 0%{?snapshot:1}
+Source0:	https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master.tar.bz2#/%{oname}-%{snapshot}.tar.bz2
+%else
 Source0:        https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v%{version}/%{oname}-v%{version}.tar.bz2
+%endif
 
 BuildRequires:  cmake
 BuildRequires:  meson
@@ -60,7 +65,7 @@ Requires:       gstreamer1.0-plugins-base
 This package provides %{name}-based GStreamer plug-in.
 
 %prep
-%autosetup -p1 -n %{oname}-v%{version}
+%autosetup -p1 -n %{oname}-%{?snapshot:master}%{!?snapshot:v%{version}}
 # Patch build gstreamer plugin
 sed -e "s|install: true,|install: true, include_directories : [ include_directories('../Source/API') ], link_args : '-lSvtAv1Enc',|" \
 -e "/svtav1enc_dep =/d" -e 's|, svtav1enc_dep||' -e "s|svtav1enc_dep.found()|true|" -i gstreamer-plugin/meson.build
