@@ -3,7 +3,7 @@
 %define devpackage %mklibname -d svt-av1
 
 %define oname   SVT-AV1
-%define snapshot 20220112
+#define snapshot 20220112
 
 Name:           svt-av1
 Version:        0.9.0
