@@ -1,4 +1,5 @@
 %define major 0
+%define enc_major 1
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
@@ -105,7 +106,7 @@ popd
 %license LICENSE.md PATENTS.md
 %doc CHANGELOG.md CONTRIBUTING.md README.md
 %{_libdir}/libSvtAv1Dec.so.%{major}*
-%{_libdir}/libSvtAv1Enc.so.%{major}*
+%{_libdir}/libSvtAv1Enc.so.%{enc_major}*
 
 %files -n %{devpackage}
 %{_includedir}/%{name}
