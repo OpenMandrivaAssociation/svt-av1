@@ -1,4 +1,5 @@
 %define major 0
+%define enc_major 1
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
@@ -6,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        0.9.0
+Version:        1.0.0
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
@@ -105,7 +106,7 @@ popd
 %license LICENSE.md PATENTS.md
 %doc CHANGELOG.md CONTRIBUTING.md README.md
 %{_libdir}/libSvtAv1Dec.so.%{major}*
-%{_libdir}/libSvtAv1Enc.so.%{major}*
+%{_libdir}/libSvtAv1Enc.so.%{enc_major}*
 
 %files -n %{devpackage}
 %{_includedir}/%{name}
