@@ -1,5 +1,5 @@
 %define major 0
-%define enc_major 1
+%define enc_major 2
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
@@ -7,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        1.8.0
+Version:        2.0.0
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
