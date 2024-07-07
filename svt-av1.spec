@@ -73,7 +73,8 @@ sed -e "s|install: true,|install: true, include_directories : [ include_director
 
 %build
 %cmake \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_APPS=ON
 %make_build
 
 cd ..
