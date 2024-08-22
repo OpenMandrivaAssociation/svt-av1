@@ -98,22 +98,17 @@ pushd gstreamer-plugin
 popd
 
 %files
-#{_bindir}/SvtAv1DecApp
 %{_bindir}/SvtAv1EncApp
-#{_mandir}/man1/SvtAv1DecApp.1*
-#{_mandir}/man1/SvtAv1EncApp.1*
+%{_mandir}/man1/SvtAv1EncApp.1*
 
 %files -n %{libpackage}
 %license LICENSE.md PATENTS.md
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-#{_libdir}/libSvtAv1Dec.so.%{major}*
 %{_libdir}/libSvtAv1Enc.so.%{enc_major}*
 
 %files -n %{devpackage}
 %{_includedir}/%{name}
-#{_libdir}/libSvtAv1Dec.so
 %{_libdir}/libSvtAv1Enc.so
-#{_libdir}/pkgconfig/SvtAv1Dec.pc
 %{_libdir}/pkgconfig/SvtAv1Enc.pc
 
 %files devel-docs
