@@ -7,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        2.1.2
+Version:        2.2.0
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
@@ -73,7 +73,8 @@ sed -e "s|install: true,|install: true, include_directories : [ include_director
 
 %build
 %cmake \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_APPS=ON
 %make_build
 
 cd ..
@@ -89,7 +90,7 @@ rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 install -d -m0755 %{buildroot}/%{_mandir}/man1
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:%{buildroot}%{_libdir}
-help2man -N --help-option=-help --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1DecApp > %{buildroot}%{_mandir}/man1/SvtAv1DecApp.1
+#help2man -N --help-option=-help --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1DecApp > %{buildroot}%{_mandir}/man1/SvtAv1DecApp.1
 help2man -N --help-option=-help --no-discard-stderr --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1EncApp > %{buildroot}%{_mandir}/man1/SvtAv1EncApp.1
 
 pushd gstreamer-plugin
@@ -97,22 +98,17 @@ pushd gstreamer-plugin
 popd
 
 %files
-%{_bindir}/SvtAv1DecApp
 %{_bindir}/SvtAv1EncApp
-%{_mandir}/man1/SvtAv1DecApp.1*
 %{_mandir}/man1/SvtAv1EncApp.1*
 
 %files -n %{libpackage}
 %license LICENSE.md PATENTS.md
 %doc CHANGELOG.md CONTRIBUTING.md README.md
-%{_libdir}/libSvtAv1Dec.so.%{major}*
 %{_libdir}/libSvtAv1Enc.so.%{enc_major}*
 
 %files -n %{devpackage}
 %{_includedir}/%{name}
-%{_libdir}/libSvtAv1Dec.so
 %{_libdir}/libSvtAv1Enc.so
-%{_libdir}/pkgconfig/SvtAv1Dec.pc
 %{_libdir}/pkgconfig/SvtAv1Enc.pc
 
 %files devel-docs
