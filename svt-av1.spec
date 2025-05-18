@@ -7,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        3.0.0
+Version:        3.0.2
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
