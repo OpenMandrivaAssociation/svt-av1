@@ -1,5 +1,5 @@
 %define major 0
-%define enc_major 2
+%define enc_major 3
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
