@@ -18,6 +18,7 @@ Source0:	https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master
 %else
 Source0:        https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v%{version}/%{oname}-v%{version}.tar.bz2
 %endif
+Patch0:        svt-av1-gstsvtav1enc.c.patch
 
 BuildRequires:  cmake
 BuildRequires:  meson
