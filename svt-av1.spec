@@ -1,5 +1,5 @@
 %define major 0
-%define enc_major 2
+%define enc_major 4
 %define libpackage %mklibname svt-av1 %{major}
 %define devpackage %mklibname -d svt-av1
 
@@ -7,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        2.3.0
+Version:        4.0.1
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
@@ -19,15 +19,19 @@ Source0:	https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/master/SVT-AV1-master
 Source0:        https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v%{version}/%{oname}-v%{version}.tar.bz2
 %endif
 
+BuildSystem: cmake
+
+BuildOption(conf): -DUSE_CPUINFO=AUTO
+BuildOption(conf): -DREPRODUCIBLE_BUILDS=1
+BuildOption(conf): -DSVT_AV1_LTO=ON
+BuildOption(conf): -DSVT_AV1_PGO=ON
+
 BuildRequires:  cmake
-BuildRequires:  meson
 BuildRequires:  yasm
 BuildRequires:  help2man
-BuildRequires:  pkgconfig(gstreamer-1.0)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-1.0)
 
 Requires:	%{libpackage} = %{EVRD}
-Requires: gstreamer1.0-%{name} = %{EVRD}
+Obsoletes: gstreamer1.0-%{name}
 
 %description
 The Scalable Video Technology for AV1 Encoder (SVT-AV1 Encoder) is an
@@ -58,44 +62,16 @@ BuildArch:  noarch
 %description devel-docs
 This package contains the documentation for development of SVT-AV1.
 
-%package -n     gstreamer1.0-%{name}
-Summary:        GStreamer 1.0 %{name}-based plug-in
-Requires:       gstreamer1.0-plugins-base
-
-%description -n gstreamer1.0-%{name}
-This package provides %{name}-based GStreamer plug-in.
-
 %prep
 %autosetup -p1 -n %{oname}-%{?snapshot:master}%{!?snapshot:v%{version}}
-# Patch build gstreamer plugin
-sed -e "s|install: true,|install: true, include_directories : [ include_directories('../Source/API') ], link_args : '-lSvtAv1Enc',|" \
--e "/svtav1enc_dep =/d" -e 's|, svtav1enc_dep||' -e "s|svtav1enc_dep.found()|true|" -i gstreamer-plugin/meson.build
 
-%build
-%cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_APPS=ON
-%make_build
-
-cd ..
-export LIBRARY_PATH="$LIBRARY_PATH:$(pwd)/Bin/Release"
-cd gstreamer-plugin
-%meson
-%meson_build
-cd ..
-
-%install
-%make_install -C build
+%install -a
 rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 install -d -m0755 %{buildroot}/%{_mandir}/man1
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:%{buildroot}%{_libdir}
 #help2man -N --help-option=-help --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1DecApp > %{buildroot}%{_mandir}/man1/SvtAv1DecApp.1
-help2man -N --help-option=-help --no-discard-stderr --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1EncApp > %{buildroot}%{_mandir}/man1/SvtAv1EncApp.1
-
-pushd gstreamer-plugin
-%meson_install
-popd
+help2man -N --help-option=--help --no-discard-stderr --version-string=%{version} %{buildroot}%{_bindir}/SvtAv1EncApp > %{buildroot}%{_mandir}/man1/SvtAv1EncApp.1
 
 %files
 %{_bindir}/SvtAv1EncApp
@@ -110,10 +86,8 @@ popd
 %{_includedir}/%{name}
 %{_libdir}/libSvtAv1Enc.so
 %{_libdir}/pkgconfig/SvtAv1Enc.pc
+%{_libdir}/cmake/%{oname}/*.cmake
 
 %files devel-docs
 %license LICENSE.md PATENTS.md
 %doc Docs
-
-%files -n gstreamer1.0-%{name}
-%{_libdir}/gstreamer-1.0/libgstsvtav1enc.so
