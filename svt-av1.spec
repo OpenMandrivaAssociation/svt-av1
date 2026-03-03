@@ -74,8 +74,9 @@ sed -e "s|install: true,|install: true, include_directories : [ include_director
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_APPS=ON
-%make_build
+    -DBUILD_APPS=ON \
+    -G Ninja
+%ninja_build
 
 cd ..
 export LIBRARY_PATH="$LIBRARY_PATH:$(pwd)/Bin/Release"
@@ -85,7 +86,7 @@ cd gstreamer-plugin
 cd ..
 
 %install
-%make_install -C build
+%ninja_install -C build
 rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 install -d -m0755 %{buildroot}/%{_mandir}/man1
