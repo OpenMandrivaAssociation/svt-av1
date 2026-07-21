@@ -7,7 +7,7 @@
 #define snapshot 20220112
 
 Name:           svt-av1
-Version:        4.1.0
+Version:        4.2.0
 Release:        %{?snapshot:0.%{snapshot}.}1
 Summary:        Scalable Video Technology for AV1 Encoder
 Group:          System/Libraries
@@ -25,6 +25,7 @@ BuildOption(conf): -DUSE_CPUINFO=AUTO
 BuildOption(conf): -DREPRODUCIBLE_BUILDS=1
 BuildOption(conf): -DSVT_AV1_LTO=ON
 BuildOption(conf): -DSVT_AV1_PGO=ON
+BuildOption(conf): -DCMAKE_BUILD_TYPE=Release
 
 BuildRequires:  cmake
 BuildRequires:  yasm
